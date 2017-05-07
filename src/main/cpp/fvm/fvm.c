@@ -2,10 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-/*
- *
-#include <string.h>
- */
 
 long *stack;
 long* stptr;
@@ -38,13 +34,14 @@ void lit() {
     ++ip;
 }
 
-void addlit(long a) {
-    *ip = &lit;
-    ip++;
-    *ip = (word)a;
-    ip++;
+word* compile(int n, word* words) {
+    int i;
+    for(i=0; i<n; i++) {
+        *ip = words[i];
+        ip++;
+    }
+    return ip;
 }
-
 /*
 void exit() {
     free(mem);
@@ -60,6 +57,20 @@ void fvm_init() {
     ip = mem;
 }
 
+void fvm_reset() {
+    ip = mem;
+}
+
+
+void fvm_inner(word* ip_end) {
+    do {
+        printf("start inner\n");
+        *w = *ip;
+        ip++;
+        printf("call now\n");
+        (*w)();
+    } while (ip!=ip_end);
+}
 
 
 /*
